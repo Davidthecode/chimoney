@@ -47,57 +47,55 @@ export const authOptions: NextAuthOptions = {
     callbacks: {
         // @ts-ignore
         async signIn({ user, account }) {
-          
+
             if (account && account.provider === "google") {
                 const { name, email, id, image } = user;
                 try {
                     await dbConnect();
                     const userExists = await usermodel.findOne({ email });
 
-                    if (userExists) {
-                        return;
+                    if (!userExists) {
+                        //creates a chimoney sub account
+                        const response = await fetch(`${process.env.CHIMONEY_BASE_URL}/v0.2/sub-account/create`, {
+                            method: "POST",
+                            headers: {
+                                accept: 'application/json',
+                                "Content-Type": "application/json",
+                                "X-API-KEY": process.env.CHIMONEY_API_KEY as string
+                            },
+                            body: JSON.stringify({
+                                name,
+                                email,
+                            })
+                        });
+                        const responseData = await response.json();
+                        if (responseData.status !== 'success') {
+                            console.log('chimoney error data', responseData);
+                            return;
+                        };
+
+                        console.log("chimoney sub account registration data", responseData);
+                        const userSubId = responseData.data.id; // grabs user sub id from chimoney
+
+                        //creates user in database
+                        const res = await fetch("http://localhost:3000/api/register", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                                username: name,
+                                email,
+                                password: id,
+                                avatar: image,
+                                userSubId
+                            }),
+                        });
+
+                        if (res.ok) {
+                            return user;
+                        }
                     };
-
-                    //creates a chimoney sub account
-                    const response = await fetch(`${process.env.CHIMONEY_BASE_URL}/v0.2/sub-account/create`, {
-                        method: "POST",
-                        headers: {
-                            accept: 'application/json',
-                            "Content-Type": "application/json",
-                            "X-API-KEY": process.env.CHIMONEY_API_KEY as string
-                        },
-                        body: JSON.stringify({
-                            name,
-                            email,
-                        })
-                    });
-                    const responseData = await response.json();
-                    if (responseData.status !== 'success') {
-                        console.log('chimoney error data', responseData);
-                        return;
-                    };
-
-                    console.log("chimoney sub account registration data", responseData);
-                    const userSubId = responseData.data.id; // grabs user sub id from chimoney
-
-                    //creates user in database
-                    const res = await fetch("http://localhost:3000/api/register", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            username: name,
-                            email,
-                            password: id,
-                            avatar: image,
-                            userSubId
-                        }),
-                    });
-
-                    if (res.ok) {
-                        return user;
-                    }
                 } catch (error) {
                     console.log("Sign in error", error);
                 };

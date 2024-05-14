@@ -46,8 +46,7 @@ const Signup = () => {
                     setEmail("");
                     setPassword("");
                     toast.success("Signed up successfully");
-                    const data = await res.json();
-                    push('/dashboard');
+                    push('dashboard');
                 }
             } catch (error) {
                 setLoading(false);

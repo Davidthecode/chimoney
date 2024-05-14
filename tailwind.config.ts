@@ -9,7 +9,6 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        mulish: ['var(--font-mulish)'],
         rubik: ['var(--font-rubik)'],
       },
       backgroundImage: {

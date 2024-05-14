@@ -7,10 +7,12 @@ import { UseUserContext } from "@/context/userContext";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return (
-        <UseSidebarContext>
-            <UseUserContext>
-                <SessionProvider>{children} </SessionProvider>
-            </UseUserContext>
-        </UseSidebarContext>
+        <SessionProvider>
+            <UseSidebarContext>
+                <UseUserContext>
+                    {children}
+                </UseUserContext>
+            </UseSidebarContext>
+        </SessionProvider>
     );
 };

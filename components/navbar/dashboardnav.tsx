@@ -50,12 +50,11 @@ const DashboardNav = () => {
                 <button onClick={handleSidebar}>
                     <PanelRight className="lg:hidden mr-3" />
                 </button>
-                <p className="text-sm font-bold">Chimoney</p>
+                <p className="text-sm font-semibold">Chimoney</p>
             </div>
             <button onClick={handleNavInfo}>
                 {navInfo ? <X className="sm:hidden" /> : <Menu className="sm:hidden" />}
             </button>
-            {/* <p className="text-xs font-medium ml-auto mr-4">Chimoney Id: {userInfo?.userSubId}</p> */}
             <div className={`sm:flex ${navInfo ? "flex absolute bg-white right-2 top-16 z-10 border px-3 py-2 rounded-md" : "hidden"}`} ref={divRef}>
                 {userInfo?.avatar ? (
                     <Image src={userInfo?.avatar} alt="image" width={0} height={0} loader={({ src }) => src} className="w-8 h-8 rounded-full mr-2" />
@@ -63,7 +62,7 @@ const DashboardNav = () => {
                     <Image src={testUser} alt="Default Image" width={30} height={30} className="mr-2" />
                 )}
                 <div className="flex flex-col">
-                    <p className="text-xs font-bold">{userInfo?.username}</p>
+                    <p className="text-xs font-semibold">{userInfo?.username}</p>
                     <p className="text-xs">{userInfo?.email}</p>
                 </div>
             </div>

@@ -11,7 +11,6 @@ const Dashboard = () => {
     const [wallet, setWallet] = useState<any[]>([]);
 
     const { userInfo } = useUserContext();
-    console.log(userInfo?.userSubId)
 
     useEffect(() => {
         const getWallet = async () => {
@@ -37,8 +36,6 @@ const Dashboard = () => {
         }
     }, [userInfo]);
 
-    console.log(wallet);
-
     return (
         <div className="pt-6 px-4 sm:px-8 flex items-start h-full overflow-y-auto">
             {/* first div */}
@@ -48,7 +45,7 @@ const Dashboard = () => {
                     <h1 className="text-[#FFA14E] font-semibold">Hey {userInfo?.username}!</h1>
                 </div>
                 <p className="text-xs font- mt-2">Chimoney Id {userInfo?.userSubId}</p>
-                <h1 className="font-bold text-xl mt-2">You have a balance of ${wallet.length && wallet[0]?.balance}</h1>
+                <h1 className="font-semibold text-xl mt-2">You have a balance of ${wallet.length && wallet[0]?.balance}</h1>
                 <div className="mt-8 pr-3 py-4 border rounded-md shadow">
                     <Chart />
                 </div>

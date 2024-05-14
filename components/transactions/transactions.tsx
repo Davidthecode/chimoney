@@ -1,12 +1,10 @@
 "use client";
 
-import Image from "next/image";
-import testUser from "@/public/testuser.svg";
 import { useEffect, useState } from "react";
 import { useUserContext } from "@/context/userContext";
 import { Loader } from "lucide-react";
 
-const Transactions = ({ maxTransactions }: any) => {
+const Transactions = ({ maxTransactions }: { maxTransactions: number }) => {
   const [transactions, setTransactions] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -28,7 +26,6 @@ const Transactions = ({ maxTransactions }: any) => {
         })
         const data = await res.json();
         setTransactions(data.message.data);
-        console.log(data.message.data);
         setLoading(false);
       } catch (error) {
         console.log(error);
@@ -43,14 +40,14 @@ const Transactions = ({ maxTransactions }: any) => {
 
   return (
     <div className="flex flex-col h-full overflow-y-auto">
-      <div className="py-2 w-full border rounded-md  bg-[#FAF9F9]">
+      <div className="py-2 w-full border rounded-md bg-[#FAF9F9]">
         <table className="w-full text-sm flex flex-col p-4">
           <thead>
-            <tr className="flex justify-between text-md border-b py-3">
-              <td className="w-[25%] text-center font-semibold">Date</td>
-              <td className="w-[25%] text-center font-semibold">Type</td>
-              <td className="w-[25%] text-center font-semibold">Amount</td>
-              <td className="w-[25%] text-center font-semibold truncate">Sender/Receipent</td>
+            <tr className="flex justify-between text-md border-b py-3 font-medium">
+              <td className="w-[25%] text-center">Date</td>
+              <td className="w-[25%] text-center">Type</td>
+              <td className="w-[25%] text-center">Amount</td>
+              <td className="w-[25%] text-center truncate">Transaction ID</td>
             </tr>
           </thead>
           {loading && (
@@ -68,10 +65,11 @@ const Transactions = ({ maxTransactions }: any) => {
           )}
           {!loading && transactions && transactions.length > 0 && (
             <tbody className="flex flex-col space-y-4 overflow-y-auto">
-              {!loading && transactions &&
+              {!loading &&
                 transactions
+                  .slice()
+                  .sort((a: any, b: any) => new Date(b.issueDate).getTime() - new Date(a.issueDate).getTime())
                   .slice(0, maxTransactions)
-                  .sort((a: any, b: any) => new Date(b.issueDate).getTime() - new Date(a.issueDate).getTime()) // Sort transactions based on issueDate
                   .map((transaction: any) => {
                     const transactionsDate = transaction?.issueDate;
                     //function to format date and time
@@ -96,10 +94,10 @@ const Transactions = ({ maxTransactions }: any) => {
                     const formattedDateTime = formatDateTime(transactionsDate);
                     return (
                       <tr className="flex justify-between text-sm border-b py-3" key={transaction?.id}>
-                        <td className="flex items-center justify-center w-[25%]">{formattedDateTime}</td>
+                        <td className="flex items-center justify-center w-[25%] truncate">{formattedDateTime}</td>
                         <td className="w-[25%] text-center truncate">{transaction?.issuer == userInfo?.userSubId ? "Sent" : "Received"}</td>
                         <td className="w-[25%] text-center truncate">${transaction?.valueInUSD}</td>
-                        <td className="w-[25%] text-center truncate"></td>
+                        <td className="w-[25%] text-center truncate">{transaction?.t_id}</td>
                       </tr>
                     )
                   })}

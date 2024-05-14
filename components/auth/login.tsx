@@ -27,7 +27,6 @@ const Login = () => {
             });
             console.log(res);
             if (res && res.error) {
-                console.log(res.error);
                 toast.error("Invalid Credentials");
                 setLoading(false);
                 return;
@@ -36,7 +35,8 @@ const Login = () => {
             setEmail("");
             setPassword("");
             setLoading(false);
-            replace("/dashboard");
+            toast.success("Logged in successfully");
+            replace("dashboard");
         } catch (error) {
             console.log(error);
         };
