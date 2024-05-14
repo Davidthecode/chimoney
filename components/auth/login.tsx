@@ -23,15 +23,12 @@ const Login = () => {
             const res = await signIn("credentials", {
                 email,
                 password,
-                redirect: false,
             });
-            console.log(res);
             if (res && res.error) {
                 toast.error("Invalid Credentials");
                 setLoading(false);
                 return;
             };
-            console.log(res)
             setEmail("");
             setPassword("");
             setLoading(false);
