@@ -31,7 +31,8 @@ const SendMoney = () => {
             bodyData = {
                 email: emailValue,
                 amount: amountValue,
-                userSubId
+                userSubId,
+                action: "toEmail"
             };
         } else {
             if (!phonenumberValue || !amountValue) {
@@ -41,7 +42,8 @@ const SendMoney = () => {
             bodyData = {
                 phone: phonenumberValue,
                 amount: amountValue,
-                userSubId
+                userSubId,
+                action: "toPhone"
             };
         };
 
@@ -75,7 +77,7 @@ const SendMoney = () => {
     return (
         <div className="h-full w-full bg-[#FAF9F9]">
             <div className="rounded-md p-4 shadow">
-                <h1 className="text-lg font-semibold">Send Chimoney</h1>
+                <h1 className="text-lg font-semibold">Make Payment</h1>
                 <p className="text-sm font-medium">To anyone, anywhere, securely</p>
                 <div className="flex items-center text-sm border mt-4 px-2 py-1 rounded-3xl bg-[#E7E5E4]">
                     <button className={`font-medium px-4 py-2 rounded-3xl w-1/2 text-center ${toEmail && "bg-[#dbdbda]"}`} onClick={handleToEmail}>To email</button>

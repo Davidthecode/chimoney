@@ -1,7 +1,7 @@
 "use client";
 
 import Chart from "@/components/barchart/bar-chart";
-import SendMoney from "@/components/dashboard/sendmoney";
+import SendMoney from "@/components/payments/sendmoney";
 import AboutChimoney from "@/components/dashboard/aboutChimoney";
 import { useEffect, useState } from "react";
 import { useUserContext } from "@/context/userContext";
@@ -11,6 +11,7 @@ const Dashboard = () => {
     const [wallet, setWallet] = useState<any[]>([]);
 
     const { userInfo } = useUserContext();
+    console.log(userInfo?.userSubId)
 
     useEffect(() => {
         const getWallet = async () => {
@@ -46,7 +47,8 @@ const Dashboard = () => {
                     <div className="text-xl mr-2">👋</div>
                     <h1 className="text-[#FFA14E] font-semibold">Hey {userInfo?.username}!</h1>
                 </div>
-                <h1 className="font-bold text-xl mt-6">You have a balance of ${wallet.length && wallet[0]?.balance}</h1>
+                <p className="text-xs font- mt-2">Chimoney Id {userInfo?.userSubId}</p>
+                <h1 className="font-bold text-xl mt-2">You have a balance of ${wallet.length && wallet[0]?.balance}</h1>
                 <div className="mt-8 pr-3 py-4 border rounded-md shadow">
                     <Chart />
                 </div>

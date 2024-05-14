@@ -47,10 +47,10 @@ const Transactions = ({ maxTransactions }: any) => {
         <table className="w-full text-sm flex flex-col p-4">
           <thead>
             <tr className="flex justify-between text-md border-b py-3">
-              <td className="w-[25%] text-center font-semibold">Name</td>
-              <td className="w-[25%] text-center font-semibold">Amount</td>
               <td className="w-[25%] text-center font-semibold">Date</td>
-              <td className="w-[25%] text-center font-semibold">Status</td>
+              <td className="w-[25%] text-center font-semibold">Type</td>
+              <td className="w-[25%] text-center font-semibold">Amount</td>
+              <td className="w-[25%] text-center font-semibold truncate">Sender/Receipent</td>
             </tr>
           </thead>
           {loading && (
@@ -96,13 +96,10 @@ const Transactions = ({ maxTransactions }: any) => {
                     const formattedDateTime = formatDateTime(transactionsDate);
                     return (
                       <tr className="flex justify-between text-sm border-b py-3" key={transaction?.id}>
-                        <td className="flex items-center justify-center w-[25%]">
-                          <Image src={testUser} alt="image" width={30} height={30} className="mr-3" />
-                          <p className="text-md truncate">Ajibola David</p>
-                        </td>
+                        <td className="flex items-center justify-center w-[25%]">{formattedDateTime}</td>
+                        <td className="w-[25%] text-center truncate">{transaction?.issuer == userInfo?.userSubId ? "Sent" : "Received"}</td>
                         <td className="w-[25%] text-center truncate">${transaction?.valueInUSD}</td>
-                        <td className="w-[25%] text-center truncate">{formattedDateTime}</td>
-                        <td className="w-[25%] text-center truncate">{transaction?.status}</td>
+                        <td className="w-[25%] text-center truncate"></td>
                       </tr>
                     )
                   })}
