@@ -1,7 +1,7 @@
 import Signup from "@/components/auth/signup";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import authOptions from "@/lib/authOptions";
 
 const SignupPage = async () => {
     const session = await getServerSession(authOptions);

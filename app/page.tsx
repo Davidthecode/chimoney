@@ -1,7 +1,7 @@
 import Index from "@/components/home";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { authOptions } from "./api/auth/[...nextauth]/route";
+import authOptions from "@/lib/authOptions";
 
 const Home = async () => {
   const session = await getServerSession(authOptions);
