@@ -23,7 +23,7 @@ const Signup = () => {
             try {
                 setLoading(true);
                 const avatar = `https://ui-avatars.com/api/?name=${username}&background=random`;
-                const res = await fetch("api/auth", {
+                const res = await fetch("api/register", {
                     method: "POST",
                     headers: {
                         "content-type": "application/json"
