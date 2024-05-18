@@ -11,7 +11,7 @@ Chimoney is a fast, secure, and efficient payment platform designed to seamlessl
 - Responsive and Modern Design
 
 ## Getting started
-To start useing TaskMaster, simply visit [chimoney-test-app.vercel.app](https://chimoney-test-app.vercel.app)
+To start using Chimoney, simply visit [chimoney-test-app.vercel.app](https://chimoney-test-app.vercel.app)
 
 ## To Run The Application
 
